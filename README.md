@@ -1,2 +1,3 @@
-# ABCal
- Dynamic calendar for schools on an AB block schedule.
+# SKHScal
+
+Dynamic calendar for schools on an AB block schedule.
