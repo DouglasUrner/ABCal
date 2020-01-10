@@ -11,6 +11,8 @@ class EventCreator
 
   def initialize(first, last, file)
     @cal = Icalendar::Calendar.new
+    @cal.append_custom_property("NAME", "SKHS Days")
+    @cal.append_custom_property("REFRESH-INTERVAL;VALUE=DURATION", "P1H")
     File.open(file, 'r') do |f|
       f.each_line do |l|
         OFF[Date.parse(l)] = true
