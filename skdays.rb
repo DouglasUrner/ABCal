@@ -78,8 +78,23 @@ class EventCreator
 end
 
 if __FILE__ == $0
-  first_day = Date.parse(ARGV[0])
-  last_day = Date.parse(ARGV[1])
-  calendar = EventCreator.new(first_day, last_day)
+  require 'optparse'
+
+  options = {}
+
+  OptionParser.new do |opts|
+    opts.banner = "Usage: #{$0} [options]"
+
+    opts.on("-f DATE")     { |v| options[:first_day] = Date.parse(v) }
+    opts.on("-F FILENAME") { |v| options[:filename]  = v }
+    opts.on("-l DATE")     { |v| options[:last_day]  = Date.parse(v) }
+    opts.on("-h")          { puts opts; exit }
+    opts.on("-v")          { |v| options[:verbose] = v }
+
+  end.parse!
+
+  if (options[:verbose] == true) then puts options; end
+
+  calendar = EventCreator.new(options[:first_day], options[:last_day])
   calendar.to_ics
 end
