@@ -28,7 +28,7 @@ class EventCreator
       end
       if (date.wday > 0 && date.wday < 6)
         e = Icalendar::Event.new
-        e.dtstart = date
+        e.dtstart = Icalendar::Values::Date.new(date)
         e.summary = "#{(count % 2 == 1) ? 'A' : 'B'} Day"
         @cal.add_event(e)
         count += 1
