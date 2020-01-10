@@ -5,6 +5,7 @@ To use, either:
 * Subscribe to the calendar (so it will automatically update):
   - For **macOS Calendar:**
      1. File > New Calendar Subscription
+     1. Clear the alerts checkbox (unless you want to be reminded what kind of day the next day is...).
      1. Select an update frequency, I'd suggest daily or every hour so that it remains accurate even during inclement weather.
   - For **Microsoft Outlook:**
      1. Click on the calendar button in the lower left corner of the Outlook window.
