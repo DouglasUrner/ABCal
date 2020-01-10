@@ -73,7 +73,7 @@ class EventCreator
   end
 
   def to_ics
-    File.open("scripted.ics", "w") { |f| f.write @cal.to_ical }
+    File.open("docs/abday.ics", "w") { |f| f.write @cal.to_ical }
   end
 end
 
