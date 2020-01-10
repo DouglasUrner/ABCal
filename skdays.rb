@@ -5,53 +5,17 @@ require 'icalendar'
 
 ### Create iCal ics file with multiple events
 class EventCreator
-  OFF = Hash.new
-
-  # October
-  OFF[Date.new(2019, 10, 11)] = true
-  OFF[Date.new(2019, 10, 14)] = true
-  OFF[Date.new(2019, 10, 16)] = true
-
-  # November
-  OFF[Date.new(2019, 11, 11)] = true
-  OFF[Date.new(2019, 11, 28)] = true
-  OFF[Date.new(2019, 11, 29)] = true
-
-  # December
-  OFF[Date.new(2019, 12, 23)] = true
-  OFF[Date.new(2019, 12, 24)] = true
-  OFF[Date.new(2019, 12, 25)] = true
-  OFF[Date.new(2019, 12, 26)] = true
-  OFF[Date.new(2019, 12, 27)] = true
-  OFF[Date.new(2019, 12, 30)] = true
-  OFF[Date.new(2019, 12, 31)] = true
-
-  # January
-  OFF[Date.new(2020, 1, 1)] = true
-  OFF[Date.new(2020, 1, 2)] = true
-  OFF[Date.new(2020, 1, 3)] = true
-  OFF[Date.new(2020, 1, 20)] = true
-
-  # February
-  OFF[Date.new(2020, 2, 17)] = true
-  OFF[Date.new(2020, 2, 18)] = true
-
-  # March
-  OFF[Date.new(2020, 3, 30)] = true
-  OFF[Date.new(2020, 3, 31)] = true
-
-  # April
-  OFF[Date.new(2020, 4, 1)] = true
-  OFF[Date.new(2020, 4, 2)] = true
-  OFF[Date.new(2020, 4, 3)] = true
-
-  # May
-  OFF[Date.new(2020, 5, 25)] = true
+  OFF = {}
 
   attr_reader :cal
 
-  def initialize(first, last)
+  def initialize(first, last, file)
     @cal = Icalendar::Calendar.new
+    File.open(file, 'r') do |f|
+      f.each_line do |l|
+        OFF[Date.parse(l)] = true
+      end
+    end
     make_events(first, last)
   end
 
@@ -80,21 +44,21 @@ end
 if __FILE__ == $0
   require 'optparse'
 
-  options = {}
+  opts = {}
 
-  OptionParser.new do |opts|
-    opts.banner = "Usage: #{$0} [options]"
+  OptionParser.new do |o|
+    o.banner = "Usage: #{$0} [options]"
 
-    opts.on("-f DATE")     { |v| options[:first_day] = Date.parse(v) }
-    opts.on("-F FILENAME") { |v| options[:filename]  = v }
-    opts.on("-l DATE")     { |v| options[:last_day]  = Date.parse(v) }
-    opts.on("-h")          { puts opts; exit }
-    opts.on("-v")          { |v| options[:verbose] = v }
+    o.on("-f DATE")     { |v| opts[:first_day] = Date.parse(v) }
+    o.on("-F FILENAME") { |v| opts[:filename]  = v }
+    o.on("-l DATE")     { |v| opts[:last_day]  = Date.parse(v) }
+    o.on("-h")          { puts o; exit }
+    o.on("-v")          { |v| opts[:verbose] = v }
 
   end.parse!
 
-  if (options[:verbose] == true) then puts options; end
+  if (opts[:verbose] == true) then puts opts; end
 
-  calendar = EventCreator.new(options[:first_day], options[:last_day])
+  calendar = EventCreator.new(opts[:first_day], opts[:last_day], opts[:filename])
   calendar.to_ics
 end
