@@ -3,3 +3,4 @@
 
 # Preserve CRLF line endings in calendar files.
 .ics text eol=crlf
+.ics text eol=crlf
