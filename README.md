@@ -26,4 +26,4 @@ Setup instructions are in [docs/README.md][instructions].
 ## Automation
 
 [StackOverflow: How do I create a link to add an entry to a calendar?
-](https://stackoverflow.com/questions/5831877/how-do-i-create-a-link-to-add-an-entry-to-a-calendar)
+](https://stackoverflow.com/questions/5831877/how-do-i-create-a-link-to-add-an-entry-to-a-calendar) - might be helpful for finding information on creating a "click to subscribe" link.
