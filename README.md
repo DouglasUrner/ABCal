@@ -17,3 +17,7 @@ Command line scripts to generate **[iCalendar][] ([RFC5545][])** entries for A a
 Setup instructions are in [docs/README.md][instructions].
 
 [instructions]: <docs/README.md>
+
+## Validation
+
+[iCalendar Validator](https://icalendar.org/validator.html)
