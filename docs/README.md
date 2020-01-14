@@ -19,6 +19,6 @@ To use, try one of these methods (easiest first), favor one of the subscription 
   - For **Google Calendar:**
      1. Click on **Other Calendars +** in the lower left hand corner of the Google Calendar window.
      1. Click on **From URL**.
-  - **All:** paste the calendar's URL **https\://douglasurner.github.io/SKHScal/skdays.ics**
+  - **All:** paste the calendar's URL **<span>https://</span>douglasurner.github.io/SKHScal/skdays.ics**
   
 * Download and import the [**.ics**](https://douglasurner.github.io/SKHScal/skdays.ics) file.
