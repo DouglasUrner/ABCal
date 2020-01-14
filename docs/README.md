@@ -21,7 +21,7 @@ To use, try one of these methods (easiest first), favor one of the subscription 
      1. Click on **From URL**.
   - **All:** paste the calendar's URL:
   
-       **<span>https://</span>douglasurner.github.io/SKHScal/skdays.ics**
+        **<span>https://</span>douglasurner.github.io/SKHScal/skdays.ics**
      
     into the text box.
   
