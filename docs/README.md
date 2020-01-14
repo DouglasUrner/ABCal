@@ -6,7 +6,7 @@ To use, try one of these methods (easiest first), favor one of the subscription 
 
   <a href="webcal://douglasurner.github.io/SKHScal/skdays.ics">SKHS A/B Day Calendar</a>
   
-  The link will attempt to add the calendar subscription to your calendar. You (should) have to give it permission to continue.
+  The link will attempt to add the calendar subscription to your calendar. You (should) have to give it permission to continue. The calendar suggests a refresh interval of 1 hour, this seems to work for Outlook and for Apple calendars (both Mac and iPhone). Google has a mind of its own and says "It may take up to 12 hours for changes to show in your Google Calendar." They used to say "a few hours," then it was "up to 8 hours." Have faith, it may happen...
 
 * Subscribe manually to the calendar:
   - For **macOS Calendar:**
