@@ -3,7 +3,7 @@
 To use, try one of these methods (easiest first):
 * Subscribe automagically by clicking on the link below.
 
-  [SKHS A/B Day Calendar](webcal://douglasurner.github.io/SKHScal/skdays.ics)
+  <a href="webcal://douglasurner.github.io/SKHScal/skdays.ics">SKHS A/B Day Calendar</a>
 
 * Subscribe to the calendar (so it will automatically update):
   - For **macOS Calendar:**
