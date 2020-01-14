@@ -25,7 +25,6 @@ class EventCreator
         # Clean up records.
         l.strip!
         r = Array.new(l.split(/\|\s*/))
-        puts "l = \'#{l}\' r = \'#{r}\'"
 
         exception = { reason: r[1], message: r[2] }
         if (exception[:reason] == "X")
@@ -46,7 +45,9 @@ class EventCreator
       end
     end
     add_events(opts)
-    puts "Extended calendar by #{@extend_year} days. Last day is #{opts[:last_day]}."
+    if (opts[:verbose] == true)
+      puts "Extended calendar by #{@extend_year} days. Last day is #{opts[:last_day]}."
+    end
   end
 
   def add_events(opts)
