@@ -8,8 +8,9 @@ class EventCreator
   attr_reader :cal
 
   OFF = {}
-  
+
   def initialize(opts)
+    @extend_year = 0 # Number of days to add to :last_day (e.g., for snow days).
     @cal = Icalendar::Calendar.new
     # RFC 7986
     @cal.append_custom_property("NAME", opts[:cal_name])
@@ -21,18 +22,53 @@ class EventCreator
     @cal.append_custom_property("X-PUBLISHED-TTL;VALUE=DURATION", opts[:ttl])
     File.open(opts[:off_file], 'r') do |f|
       f.each_line do |l|
-        OFF[Date.parse(l)] = true
+        # Clean up records.
+        l.strip!
+        r = Array.new(l.split(/\|\s*/))
+        puts "l = \'#{l}\' r = \'#{r}\'"
+
+        exception = { reason: r[1], message: r[2] }
+        if (exception[:reason] == "X")
+          @extend_year += 1
+        end
+
+        OFF[Date.parse(r[0])] = exception
+      end
+    end
+
+    if (@extend_year != 0)
+      (1).upto(@extend_year) do
+        if (opts[:last_day].friday?)
+          opts[:last_day] += 3
+        else
+          opts[:last_day] += 1
+        end
       end
     end
     add_events(opts)
+    puts "Extended calendar by #{@extend_year} days. Last day is #{opts[:last_day]}."
   end
 
   def add_events(opts)
     count = 1
 
     opts[:first_day].upto(opts[:last_day]) do |date|
-      if (OFF[date] == true)
-        next
+      if (OFF.include?(date))
+        case (OFF[date][:reason])
+        when 'R'
+          # Start of a new semester, reset A/B day rotation.
+          count = 1
+        when 'X'
+          # Day that extended the calendar (and slipped the rotation).
+          e = Icalendar::Event.new
+          e.dtstart = Icalendar::Values::Date.new(date)
+          e.summary = "#{OFF[date][:message]}"
+          @cal.add_event(e)
+          next
+        else
+          # Everything else.
+          next
+        end
       end
       if (date.wday > 0 && date.wday < 6)
         e = Icalendar::Event.new

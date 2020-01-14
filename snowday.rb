@@ -10,18 +10,24 @@
 require 'date'
 require 'optparse'
 
-opts = {}
+today = Date::today.strftime("%Y-%m-%d")
+
+opts = { date: (Date::today.strftime("%Y-%m-%d")), message: "Snow Day" }
 
 OptionParser.new do |o|
   o.banner = "Usage: #{$0} [options]"
 
-  o.on("-d DATE")     { |v| opts[:snow_day] = Date.parse(v) }
-  o.on("-F FILENAME") { |v| opts[:filename]  = v }
+  o.on("-d DATE")     { |v| opts[:date] = Date.parse(v) }
+  o.on("-I FILENAME") { |v| opts[:filename] = v }
   o.on("-h")          { puts o; exit }
+  o.on("-m MESSAGE")  { |v| opts[:message] = v }
   o.on("-v")          { |v| opts[:verbose] = v }
 
 end.parse!
 
-if (opts[:verbose] == true) then puts opts; end
+if (opts[:verbose] == true) then
+  puts opts
+  puts "#{opts[:date]} #{opts[:message]}\n"
+end
 
-File.open(opts[:filename], "a") { |f| f.write "#{opts[:snow_day]}\n" }
+File.open(opts[:filename], "a") { |f| f.write "#{opts[:date]}||#{opts[:message]}\n" }
