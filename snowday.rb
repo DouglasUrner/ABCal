@@ -14,7 +14,7 @@ today = Date::today.strftime('%Y-%m-%d')
 
 opts = {
   date: (Date::today.strftime('%Y-%m-%d')),
-  reason: 'X'
+  reason: 'X',
   message: 'Snow Day'
 }
 
