@@ -35,7 +35,7 @@ class EventCreator
       end
     end
 
-    if (@extend_year != 0)
+    if (:extend_year == true && @extend_year != 0)
       (1).upto(@extend_year) do
         if (opts[:last_day].friday?)
           opts[:last_day] += 3
@@ -43,11 +43,15 @@ class EventCreator
           opts[:last_day] += 1
         end
       end
+      if (opts[:verbose] == true)
+        puts "Extended calendar by #{@extend_year} days. Last day is #{opts[:last_day]}."
+      end
+    else
+      # Ensure that we don't extend the year even if there were snow
+      puts "Did not extend the calenday by #{@extend_year} days."
+      @extend_year = 0
     end
     add_events(opts)
-    if (opts[:verbose] == true)
-      puts "Extended calendar by #{@extend_year} days. Last day is #{opts[:last_day]}."
-    end
   end
 
   def add_events(opts)
@@ -56,6 +60,11 @@ class EventCreator
     opts[:first_day].upto(opts[:last_day]) do |date|
       if (OFF.include?(date))
         case (OFF[date][:reason])
+        when 'N' # Neutral day - pause A/B rotation
+          e = Icalendar::Event.new
+          e.dtstart = Icalendar::Values::Date.new(date)
+          e.summary = "#{OFF[date][:message]}"
+          @cal.add_event(e)
         when 'R'
           # Start of a new semester, reset A/B day rotation.
           count = 1
@@ -106,6 +115,8 @@ if __FILE__ == $0
     o.on("-O FILENAME") { |v| opts[:out_file]  = v }
     o.on("-h")          { puts o; exit }
     o.on("-v")          { |v| opts[:verbose] = v }
+    o.on("-x")          { |v| opts[:extend_year] = v }
+
 
   end.parse!
 
