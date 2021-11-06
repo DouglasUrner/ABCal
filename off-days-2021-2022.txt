@@ -3,11 +3,12 @@
 2021-11-11||Veteran's Day
 2021-11-25||Thanksgiving Break
 2021-11-26||Thanksgiving Break
+2021-12-20||Winter Break
 2021-12-21||Winter Break
 2021-12-22||Winter Break
 2021-12-23||Winter Break
 2021-12-24||Winter Break
-2021-12-25||Winter Break
+2021-12-27||Winter Break
 2021-12-28||Winter Break
 2021-12-29||Winter Break
 2021-12-30||Winter Break
