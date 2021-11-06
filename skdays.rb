@@ -12,14 +12,17 @@ class EventCreator
   def initialize(opts)
     @extend_year = 0 # Number of days to add to :last_day (e.g., for snow days).
     @cal = Icalendar::Calendar.new
+
     # RFC 7986
     @cal.append_custom_property("NAME", opts[:cal_name])
     @cal.append_custom_property("DESCRIPTION", opts[:desc])
     @cal.append_custom_property("REFRESH-INTERVAL;VALUE=DURATION", opts[:ttl])
+
     # Interim values
     @cal.append_custom_property("X-WR-CALNAME", opts[:cal_name])
     @cal.append_custom_property("X-WR-CALDESC", opts[:desc])
     @cal.append_custom_property("X-PUBLISHED-TTL;VALUE=DURATION", opts[:ttl])
+
     File.open(opts[:off_file], 'r') do |f|
       f.each_line do |l|
         # Clean up records.
@@ -45,22 +48,43 @@ class EventCreator
       end
       if (opts[:verbose] == true)
         puts "Extended calendar by #{@extend_year} days. Last day is #{opts[:last_day]}."
+      else
+        # Ensure that we don't extend the year even if there were snow
+        puts "Did not extend the calenday by #{@extend_year} days."
+        @extend_year = 0
       end
-    else
-      # Ensure that we don't extend the year even if there were snow
-      puts "Did not extend the calenday by #{@extend_year} days."
-      @extend_year = 0
     end
     add_events(opts)
   end
 
   def add_events(opts)
-    count = 1
+    count = 1   # A days are odd, B days are even.
+    in_school = true
+
+    # If first_day and last_day are not set on the command line, try to
+    # find them in, and set them from, off_file. Otherwise, throw an error
+    # and exit.
+    #
+    # XXX - implement this
 
     opts[:first_day].upto(opts[:last_day]) do |date|
       if (OFF.include?(date))
         case (OFF[date][:reason])
-        when 'N' # Neutral day - pause A/B rotation
+        when 'F'
+          # First day of school - (re)start output, reset rotation.
+          # XXX - test this
+          in_school = true
+          count = 1
+        when 'L'
+          # Last day of school - stop output (allows multiple years in file)
+          # XXX - test this
+          in_school = false
+          e = Icalendar::Event.new
+          e.dtstart = Icalendar::Values::Date.new(date)
+          e.summary = "#{(count % 2 == 1) ? 'A' : 'B'} Day"
+          @cal.add_event(e)
+        when 'N'
+          # Neutral day - pause A/B rotation
           e = Icalendar::Event.new
           e.dtstart = Icalendar::Values::Date.new(date)
           e.summary = "#{OFF[date][:message]}"
@@ -77,10 +101,11 @@ class EventCreator
           next
         else
           # Everything else.
+          # XXX - warn about ignored reason tags.
           next
         end
       end
-      if (date.wday > 0 && date.wday < 6)
+      if (in_school && date.wday > 0 && date.wday < 6)
         e = Icalendar::Event.new
         e.dtstart = Icalendar::Values::Date.new(date)
         e.summary = "#{(count % 2 == 1) ? 'A' : 'B'} Day"
@@ -117,12 +142,12 @@ if __FILE__ == $0
     o.on("-v")          { |v| opts[:verbose] = v }
     o.on("-x")          { |v| opts[:extend_year] = v }
 
-
   end.parse!
 
   if (opts[:verbose] == true) then puts opts; end
 
   # TODO: validate opts before calling
+  # TODO: require -f and -l options of F & L keys are not in off_file
 
   calendar = EventCreator.new(opts)
   calendar.to_ics(opts[:out_file])
