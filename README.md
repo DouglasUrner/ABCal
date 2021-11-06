@@ -15,7 +15,7 @@ Command line scripts to generate **[iCalendar][] ([RFC5545][] and [RFC7986][])**
 
 ## Usage
 
-Setup instructions are in [docs/README.md][instructions].
+End user subscription instructions are in [docs/README.md][instructions].
 
 [instructions]: <docs/README.md>
 
