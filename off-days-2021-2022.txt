@@ -1,3 +1,15 @@
 2021-09-08|R|First Day of School
 2021-10-13|N|Testing Day
+2021-11-11||Veteran's Day
+2021-11-25||Thanksgiving Break
+2021-11-26||Thanksgiving Break
+2021-12-21||Winter Break
+2021-12-22||Winter Break
+2021-12-23||Winter Break
+2021-12-24||Winter Break
+2021-12-25||Winter Break
+2021-12-28||Winter Break
+2021-12-29||Winter Break
+2021-12-30||Winter Break
+2021-12-31||Winter Break
 2022-02-01|R|Start of 2nd Semester
