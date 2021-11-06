@@ -83,12 +83,14 @@ class EventCreator
           e.dtstart = Icalendar::Values::Date.new(date)
           e.summary = "#{(count % 2 == 1) ? 'A' : 'B'} Day"
           @cal.add_event(e)
+          next
         when 'N'
           # Neutral day - pause A/B rotation
           e = Icalendar::Event.new
           e.dtstart = Icalendar::Values::Date.new(date)
           e.summary = "#{OFF[date][:message]}"
           @cal.add_event(e)
+          next
         when 'R'
           # Start of a new semester, reset A/B day rotation.
           count = 1
