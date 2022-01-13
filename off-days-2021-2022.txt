@@ -30,3 +30,5 @@
 2022-11-11||Veteran's Day
 2022-11-24||Thanksgiving
 2022-11-25||Thanksgiving
+2022-01-14|X|COVID Shutdown
+2022-01-18|X|COVID Shutdown
