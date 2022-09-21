@@ -1,1 +1,6 @@
-2022-09-07|R|1st Student Day
+2022-09-07|F|First Day of School
+2022-10-10||Inservice Day
+2022-11-11||Veteran's Day
+2022-11-24||Thanksgiving
+2022-11-25||Thanksgiving
+2023-06-16|L|Last Day of School
