@@ -13,6 +13,22 @@ Command line scripts to generate **[iCalendar][] ([RFC5545][] and [RFC7986][])**
 * **skdays.rb:** generates calendar
 * **snowday.rb:** adds snowday(s) to list of days off this year
 
+## Installing
+
+Assuming you have ruby installed;
+
+```sh
+gem install icalendar
+```
+
+## Generating / Updating the Calendar
+
+```sh
+ruby ./skcal.rb -f YYYY-MM-DD -l YYYY-MM-DD -I off-days -O docs/skdays.ics
+git commit -m "Update calendar" -a
+git push
+```
+
 ## Usage
 
 End user subscription instructions are in [docs/README.md][instructions].
