@@ -149,7 +149,7 @@ if __FILE__ == $0
   if (opts[:verbose] == true) then puts opts; end
 
   # TODO: validate opts before calling
-  # TODO: require -f and -l options of F & L keys are not in off_file
+  # TODO: require -f and -l options if F & L keys are not in off_file
 
   calendar = EventCreator.new(opts)
   calendar.to_ics(opts[:out_file])
