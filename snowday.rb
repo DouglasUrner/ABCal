@@ -22,7 +22,7 @@ OptionParser.new do |o|
   o.banner = "Usage: #{$0} [options]"
 
   o.on('-d DATE')     { |v| opts[:date] = Date.parse(v) }
-  o.on('-I FILENAME') { |v| opts[:filename] = v }
+  o.on('-O FILENAME') { |v| opts[:out_file] = v }
   o.on('-h')          { puts o; exit }
   o.on('-m MESSAGE')  { |v| opts[:message] = v }
   o.on('-r REASON')   { |v| opts[:reason] = v }
@@ -35,6 +35,6 @@ if (opts[:verbose] == true) then
   puts "#{opts[:date]} #{opts[:message]}\n"
 end
 
-File.open(opts[:filename], 'a') do |f|
+File.open(opts[:out_file], 'a') do |f|
   f.write "#{opts[:date]}|#{opts[:reason]}|#{opts[:message]}\n"
 end
