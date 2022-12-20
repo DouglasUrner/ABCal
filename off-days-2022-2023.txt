@@ -3,6 +3,7 @@
 2022-11-11||Veteran's Day
 2022-11-24||Thanksgiving
 2022-11-25||Thanksgiving
+2022-12-20|X|Snow Day
 2022-12-22||Winter Break
 2022-12-23||Winter Break
 2022-12-24||Winter Break
