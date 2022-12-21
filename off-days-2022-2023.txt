@@ -28,4 +28,5 @@
 2023-04-06||Spring Break
 2023-04-07||Spring Break
 2023-05-29||Memorial Day
-2023-06-16|L|Last Day of School
+2023-06-19||Juneteenth
+2023-06-20|L|Last Day of School
