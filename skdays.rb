@@ -62,7 +62,6 @@ class EventCreator
           next
         when 'X'
           @extend_year += 1
-          next
         end
 
         OFF[Date.parse(r[0])] = exception
