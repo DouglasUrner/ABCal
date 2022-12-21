@@ -23,6 +23,9 @@ class EventCreator
     @cal.append_custom_property("X-WR-CALDESC", opts[:desc])
     @cal.append_custom_property("X-PUBLISHED-TTL;VALUE=DURATION", opts[:ttl])
 
+    # Scan off_file to find X entries, and, if they are not set on the command line,
+    # search for F and L entries to set :first_day and :last_day.
+
     File.open(opts[:off_file], 'r') do |f|
       f.each_line do |l|
         # Clean up records.
@@ -30,29 +33,66 @@ class EventCreator
         r = Array.new(l.split(/\|\s*/))
 
         exception = { reason: r[1], message: r[2] }
-        if (exception[:reason] == "X")
+        case (exception[:reason])
+        when 'F'
+          # Set first day (if not set on the commandline).
+          if (opts[:first_day] == nil)
+            opts[:first_day] = Date.parse(r[0])
+            if (opts[:verbose] == true)
+              puts "Set opts[:first_day] to #{opts[:first_day]}."
+            end
+          else
+            if (opts[:verbose] == true)
+              puts "Ignored 'F': opts[:first_day] set to #{opts[:first_day]} on commandline."
+            end
+          end
+          next
+        when 'L'
+          # Set last day (if not set on the commandline).
+          if (opts[:last_day] == nil)
+            opts[:last_day] = Date.parse(r[0])
+            if (opts[:verbose] == true)
+              puts "Set opts[:last_day] to #{opts[:last_day]}."
+            end
+          else
+            if (opts[:verbose] == true)
+              puts "Ignored 'L': opts[:last_day] set to #{opts[:last_day]} on commandline."
+            end
+          end
+          next
+        when 'X'
           @extend_year += 1
+          next
         end
 
         OFF[Date.parse(r[0])] = exception
       end
     end
 
-    if (:extend_year == true && @extend_year != 0)
+    if (opts[:extend_year] == true && @extend_year != 0)
       (1).upto(@extend_year) do
         if (opts[:last_day].friday?)
           opts[:last_day] += 3
         else
           opts[:last_day] += 1
         end
+              
+        # Check that we aren't ending on Juneteenth or some other early summer holiday.
+        if (OFF.include?(opts[:last_day]))
+          if (opts[:verbose] == true)
+            puts "Extended year includes an off day (#{OFF[opts[:last_day]][:message]}), adding additional day."
+          end
+          opts[:last_day] += 1
+        end
       end
+
       if (opts[:verbose] == true)
-        puts "Extended calendar by #{@extend_year} days. Last day is #{opts[:last_day]}."
-      else
-        # Ensure that we don't extend the year even if there were snow
-        puts "Did not extend the calenday by #{@extend_year} days."
-        @extend_year = 0
+        puts "Extended calendar by #{@extend_year} days. Last day is now #{opts[:last_day]}."
       end
+    elsif (opts[:extend_year] != true && @extend_year != 0)
+      # Ensure that we don't extend the year even if there were snow days
+      puts "No -x option on command line, did not extend the calendar by #{@extend_year} days."
+      @extend_year = 0
     end
     add_events(opts)
   end
@@ -60,12 +100,6 @@ class EventCreator
   def add_events(opts)
     count = 1   # A days are odd, B days are even.
     in_school = true
-
-    # If first_day and last_day are not set on the command line, try to
-    # find them in, and set them from, off_file. Otherwise, throw an error
-    # and exit.
-    #
-    # XXX - implement this
 
     opts[:first_day].upto(opts[:last_day]) do |date|
       if (OFF.include?(date))
@@ -121,6 +155,7 @@ class EventCreator
     File.open(out_file, "w") { |f| f.write @cal.to_ical }
   end
 end
+
 
 if __FILE__ == $0
   require 'optparse'
