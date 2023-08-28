@@ -143,8 +143,8 @@ class EventCreator
           next
         else
           # Everything else.
-          # XXX - warn about ignored reason tags.
-	  puts("Reason #{OFF[date][:reason]} on date #{OFF[date]} not recognized.")
+          # XXX - Handle error. Exit? Announce that record will be ignored?
+	  puts "Ignored entry for #{date}: Reason #{OFF[date][:reason]} not recognized."
           next
         end
       end
