@@ -152,7 +152,7 @@ class EventCreator
         e = Icalendar::Event.new
         e.dtstart = Icalendar::Values::Date.new(date)
 	if (OFF.include?(date))
-	  e.summary = "#{OFF[date][:message]}"
+	  e.summary = "#{(count % 2 == 1) ? 'A' : 'B'} Day: #{OFF[date][:message]}"
 	else
           e.summary = "#{(count % 2 == 1) ? 'A' : 'B'} Day"
 	end
