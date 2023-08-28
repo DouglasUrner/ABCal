@@ -134,16 +134,28 @@ class EventCreator
           e.summary = "#{OFF[date][:message]}"
           @cal.add_event(e)
           next
+        when ''
+          # Break  - pause A/B rotation
+          e = Icalendar::Event.new
+          e.dtstart = Icalendar::Values::Date.new(date)
+          e.summary = "#{OFF[date][:message]}"
+          @cal.add_event(e)
+          next
         else
           # Everything else.
           # XXX - warn about ignored reason tags.
+	  puts("Reason #{OFF[date][:reason]} on date #{OFF[date]} not recognized.")
           next
         end
       end
       if (in_school && date.wday > 0 && date.wday < 6)
         e = Icalendar::Event.new
         e.dtstart = Icalendar::Values::Date.new(date)
-        e.summary = "#{(count % 2 == 1) ? 'A' : 'B'} Day"
+	if (OFF.include?(date))
+	  e.summary = "#{OFF[date][:message]}"
+	else
+          e.summary = "#{(count % 2 == 1) ? 'A' : 'B'} Day"
+	end
         @cal.add_event(e)
         count += 1
       end
