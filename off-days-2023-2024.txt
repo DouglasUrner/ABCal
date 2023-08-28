@@ -1,0 +1,31 @@
+2023-09-05|F|First Day of School
+2023-10-09||Indigenous People's (in-service) Day
+2023-11-10||Veteran's Day
+2023-11-23||Thanksgiving
+2023-11-24||Thanksgiving
+2023-12-21||Winter Break
+2023-12-22||Winter Break
+2023-12-23||Winter Break
+2023-12-24||Winter Break
+2023-12-25||Winter Break
+2023-12-26||Winter Break
+2023-12-27||Winter Break
+2023-12-28||Winter Break
+2023-12-29||Winter Break
+2023-12-30||Winter Break
+2023-12-31||Winter Break
+2023-01-01||Winter Break
+2024-01-02||Winter Break
+2024-01-03||Winter Break
+2024-01-15||MLK Day
+2024-01-29||End of 1st Semester (non-student day)
+2024-01-30|R|Start of 2nd Semester
+2024-02-19||President's Day Break
+2024-02-20||President's Day Break
+2024-04-01||Spring Break
+2024-04-02||Spring Break
+2024-04-03||Spring Break
+2024-04-04||Spring Break
+2024-04-05||Spring Break
+2024-05-27||Memorial Day
+2024-06-14|L|Last Day of School
